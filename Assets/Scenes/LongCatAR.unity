@@ -179,7 +179,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 35cf2dbfd819949a2b852fc602b2d0b2, type: 3}
-    m_FontSize: 15
+    m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -197,12 +197,14 @@ MonoBehaviour:
     Now you can see cat
     from any
 
-    angle you like and share it. Tap the
+    angle you like and share it. Tap
 
-    screen once to take an
-    image.
+    the button to take an image.
 
-    Tap the cat twice to
+    Tap
+    the cat once to change
+
+    its color. Tap the cat twice to
 
     delete it'
 --- !u!222 &9479210
@@ -1931,7 +1933,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &843284806
 Transform:
   m_ObjectHideFlags: 0
@@ -2298,7 +2300,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1128339092
 Transform:
   m_ObjectHideFlags: 0
