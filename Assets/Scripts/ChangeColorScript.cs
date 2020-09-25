@@ -9,6 +9,7 @@ public class ChangeColorScript : MonoBehaviour
     RaycastHit catHit;
     int colorNumber;
     public Material catHeadMaterial;
+    public Material catTailMaterial;
     public Material baseMaterial;
     AudioSource source;
     public AudioClip[] meowSound;
@@ -28,13 +29,13 @@ public class ChangeColorScript : MonoBehaviour
     void Update()
     {
         if (Input.touchCount == 1)
-        {
-            if (! EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+        {   
+            if (Input.GetTouch(0).tapCount == 1)
             {
-                if (Input.GetTouch(0).tapCount == 1)
-                {
-                    Touch touch = Input.GetTouch(0);
+                Touch touch = Input.GetTouch(0);
 
+                if (!EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+                {
                     if (touch.phase == TouchPhase.Ended)
                     {
                         if (Physics.Raycast(Camera.main.ScreenPointToRay(touch.position), out catHit, 10f))
@@ -105,6 +106,7 @@ public class ChangeColorScript : MonoBehaviour
 
         baseMaterial.color = newColor;
         catHeadMaterial.color = newColor;
+        catTailMaterial.color = newColor;
     }
 
     public void ResetColorCycle()
@@ -112,6 +114,7 @@ public class ChangeColorScript : MonoBehaviour
         colorNumber = 0;
         baseMaterial.color = Color.white;
         catHeadMaterial.color = Color.white;
+        catTailMaterial.color = Color.white;
     }
 
     void PlayMeow()

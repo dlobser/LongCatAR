@@ -66,7 +66,7 @@ public class testTubeScript : MonoBehaviour
                     //transformArray[i] = myGO.transform;
                 }
 
-                tube.SetPoints(splineArray, 0.05f, Color.white);
+                tube.SetPoints(splineArray, 0.06f, Color.white);
             }
         }
     }

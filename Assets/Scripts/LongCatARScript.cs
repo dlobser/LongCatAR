@@ -34,17 +34,6 @@ public class LongCatARScript : MonoBehaviour
         cam = Camera.main;
         rayManager = FindObjectOfType<ARRaycastManager>();
         changeColorScript = gameObject.GetComponent<ChangeColorScript>();
-        /*
-        Application.RequestUserAuthorization(UserAuthorization.WebCam);
-        if (Application.HasUserAuthorization(UserAuthorization.WebCam))
-        {
-            Debug.Log("webcam found");
-        }
-        else
-        {
-            Debug.Log("webcam not found");
-        }
-        */
     }
 
     private void Update()
@@ -81,6 +70,16 @@ public class LongCatARScript : MonoBehaviour
                 }
             }
         }
+        if (Input.touchCount == 1)
+        {
+            if (Input.GetTouch(0).phase == TouchPhase.Ended)
+            {
+                if (listGO == null)
+                {
+                    StartCoroutine(ResetCat());
+                }
+            }
+        }
     }
 
     void CreateCat()
@@ -99,7 +98,7 @@ public class LongCatARScript : MonoBehaviour
                 tailGO.transform.localScale = Vector3.zero;
                 tailGO.transform.position = rayHit.point;
                 myPointsScript.AddPoint(tailGO.transform.position);
-                //tube.vertices = new TubeRenderer.TubeVertex[30];
+                tube.vertices = new TubeRenderer.TubeVertex[30];
                 for (int i = 0; i < tube.vertices.Length; i++)
                 {
                     tube.vertices[i] = new TubeRenderer.TubeVertex(Vector3.zero, 1, Color.white);
@@ -147,8 +146,7 @@ public class LongCatARScript : MonoBehaviour
             {
                 if (openSsInstructions)
                 {
-                    uiManager.SetSsInstructionsScreen();
-                    openSsInstructions = false;
+                    StartCoroutine(OpenSsInstructionsScreen());
                 }
 
                 else
@@ -161,6 +159,12 @@ public class LongCatARScript : MonoBehaviour
             }
         }
     }
+    IEnumerator OpenSsInstructionsScreen()
+    {
+        yield return new WaitForSeconds(0.5f);
+        uiManager.SetSsInstructionsScreen();
+        openSsInstructions = false;
+    }
 
     IEnumerator DeleteHead()
     {
@@ -168,7 +172,7 @@ public class LongCatARScript : MonoBehaviour
         while (headGO.transform.localScale.x > 0.01f)
         {
             Vector3 currentScale = headGO.transform.localScale;
-            headGO.transform.localScale = Vector3.Lerp(currentScale, Vector3.zero, 5 * Time.deltaTime);
+            headGO.transform.localScale = Vector3.Lerp(currentScale, Vector3.zero, 7 * Time.deltaTime);
             yield return null;
         }
         Destroy(headGO.gameObject);
@@ -177,9 +181,15 @@ public class LongCatARScript : MonoBehaviour
 
     IEnumerator DeleteTube()
     {
+        int maxFrames = 30;
+        int numPointsDeleted = Mathf.RoundToInt(myPointsScript.deleteArray.Length / maxFrames);
+        if(numPointsDeleted == 0)
+        {
+            numPointsDeleted = 1;
+        }
         while (myPointsScript.deleteArray.Length > 0)
         {
-            myPointsScript.DeletePoint();
+            myPointsScript.DeletePoint(numPointsDeleted);
             tube.SetPoints(myPointsScript.deleteArray, myPointsScript.radiusArray, Color.white);
             yield return null;
         }
@@ -193,25 +203,20 @@ public class LongCatARScript : MonoBehaviour
         while (tailGO.transform.localScale.x > 0.01f)
         {
             Vector3 currentScale = tailGO.transform.localScale;
-            tailGO.transform.localScale = Vector3.Lerp(currentScale, Vector3.zero, 5 * Time.deltaTime);
+            tailGO.transform.localScale = Vector3.Lerp(currentScale, Vector3.zero, 7 * Time.deltaTime);
             yield return null;
         }
 
-        Destroy(root);
+        Destroy(root.gameObject);
         root = new GameObject();
         canCreateCat = true;
     }
 
     IEnumerator ResetCat()
     {
-        float timer = 0f;
-        while (timer < 0.5f)
-        {
-            Destroy(root);
-            root = new GameObject();
-            canCreateCat = true;
-            timer += 0.5f;
-            yield return null;
-        }
+        Destroy(root.gameObject);
+        root = new GameObject();
+        canCreateCat = true;
+        yield return null;
     }
 }

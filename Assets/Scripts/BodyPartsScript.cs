@@ -14,13 +14,7 @@ public class BodyPartsScript : MonoBehaviour
 
     //List<Vector3> points;
     Vector3[] points;
-    /*
-    bool collapse = false;
-    int pointNum;
-    int childAmt;
-    float timer;
-    float maxDistance;
-    */
+
     public bool rotate = true;
 
     void Awake()
@@ -63,7 +57,7 @@ public class BodyPartsScript : MonoBehaviour
 
     IEnumerator RotateObject()
     {
-        while (timePassed < 2f)
+        while (timePassed < 3f)
         {
             timePassed += Time.deltaTime;
             Rotate();

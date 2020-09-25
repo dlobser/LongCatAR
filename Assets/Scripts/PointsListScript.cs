@@ -58,9 +58,15 @@ public class PointsListScript : MonoBehaviour
         deleteArray = new Vector3[multiplier * listCount];
     }
     
-    public void DeletePoint()
+    public void DeletePoint(int numPoints)
     {
-        deleteArray = new Vector3[deleteArray.Length - 1];
+        int numPointsDeleted = deleteArray.Length - numPoints;
+        if (numPointsDeleted < 0)
+        {
+            numPointsDeleted = 0;
+        }
+
+        deleteArray = new Vector3[numPointsDeleted];
         if (deleteArray.Length != 0)
         {
             for (int i = 0; i < deleteArray.Length; i++)

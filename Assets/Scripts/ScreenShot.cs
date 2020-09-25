@@ -7,11 +7,11 @@ using UnityEngine.UI;
 
 public class ScreenShot : MonoBehaviour
 {
-    private const string ScreenshotPrefix = "LongCat_Screen_";
+    private const string ScreenshotPrefix = "LongARCat_Screen_";
     private const string ScreenshotFileType = ".png";
     private const string DateTimeFormat = "yyyyMMddhhmmss";
-    private const string DefaultSubject = "LongCatAR - Default subject line";
-    private const string DefaultText = "LongCatAR";
+    private const string DefaultSubject = "LongARCat - Default subject line";
+    private const string DefaultText = "LongARCat";
 
     public GameObject userInterface;
     public GameObject shareUI;
