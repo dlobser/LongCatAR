@@ -59,7 +59,7 @@ public class LongCatARScript : MonoBehaviour
 
                 if (Physics.Raycast(cam.ScreenPointToRay(touch.position), out catHit, 10f))
                 {
-                    if (catHit.collider != null)
+                    if (catHit.collider != null && catHit.transform.parent.childCount > 2)
                     {
                         tube = catHit.collider.transform.parent.GetComponent<TubeRenderer>();
                         myPointsScript = catHit.collider.transform.parent.GetComponent<PointsListScript>();
@@ -74,7 +74,7 @@ public class LongCatARScript : MonoBehaviour
         {
             if (Input.GetTouch(0).phase == TouchPhase.Ended)
             {
-                if (listGO == null)
+                if (listGO == null || root == null)
                 {
                     StartCoroutine(ResetCat());
                 }
@@ -139,6 +139,7 @@ public class LongCatARScript : MonoBehaviour
 
             if (myList.Count < 3)
             {
+                canCreateCat = false;
                 StartCoroutine(ResetCat());
             }
 
@@ -183,12 +184,15 @@ public class LongCatARScript : MonoBehaviour
     {
         int maxFrames = 30;
         int numPointsDeleted = Mathf.RoundToInt(myPointsScript.deleteArray.Length / maxFrames);
+        Transform listObj = myPointsScript.gameObject.transform; 
         if(numPointsDeleted == 0)
         {
             numPointsDeleted = 1;
         }
         while (myPointsScript.deleteArray.Length > 0)
         {
+            Destroy(listObj.GetChild(myPointsScript.deleteArray.Length - 1));
+
             myPointsScript.DeletePoint(numPointsDeleted);
             tube.SetPoints(myPointsScript.deleteArray, myPointsScript.radiusArray, Color.white);
             yield return null;
@@ -207,15 +211,14 @@ public class LongCatARScript : MonoBehaviour
             yield return null;
         }
 
-        Destroy(root.gameObject);
-        root = new GameObject();
-        canCreateCat = true;
+        StartCoroutine(ResetCat());
     }
 
     IEnumerator ResetCat()
     {
         Destroy(root.gameObject);
         root = new GameObject();
+        changeColorScript.ResetColorCycle();
         canCreateCat = true;
         yield return null;
     }
