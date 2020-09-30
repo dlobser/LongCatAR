@@ -8,8 +8,9 @@ using UnityEngine.XR.ARSubsystems;
 public class LongCatARScript : MonoBehaviour
 {
     public GameObject catHeadObj;
-    public GameObject catBodyObj;
+    public GameObject catColliderObj;
     public GameObject catTailObj;
+    public GameObject planeObj;
     public float minDistance = 0.3f;
     public GameObject listObj;
     public UIScript uiManager;
@@ -34,6 +35,7 @@ public class LongCatARScript : MonoBehaviour
         cam = Camera.main;
         rayManager = FindObjectOfType<ARRaycastManager>();
         changeColorScript = gameObject.GetComponent<ChangeColorScript>();
+        planeObj.SetActive(true);
     }
 
     private void Update()
@@ -59,7 +61,7 @@ public class LongCatARScript : MonoBehaviour
 
                 if (Physics.Raycast(cam.ScreenPointToRay(touch.position), out catHit, 10f))
                 {
-                    if (catHit.collider != null && catHit.transform.parent.childCount > 2)
+                    if (catHit.collider != null)
                     {
                         tube = catHit.collider.transform.parent.GetComponent<TubeRenderer>();
                         myPointsScript = catHit.collider.transform.parent.GetComponent<PointsListScript>();
@@ -115,10 +117,6 @@ public class LongCatARScript : MonoBehaviour
                 if (Vector3.Distance(myList[myList.Count - 1], rayHit.point) > minDistance)
                 {
                     myPointsScript.AddPoint(rayHit.point);
-                    GameObject bodyGO = Instantiate(catBodyObj, listGO.transform);
-                    bodyGO.transform.position = myPointsScript.splineArray[myPointsScript.splineArray.Length - 2];
-                    GameObject bodyGO2 = Instantiate(catBodyObj, listGO.transform);
-                    bodyGO2.transform.position = myPointsScript.splineArray[myPointsScript.splineArray.Length - 1];
                     tube.SetPoints(myPointsScript.splineArray, myPointsScript.radiusArray, Color.white);
                 }
             }
@@ -133,12 +131,18 @@ public class LongCatARScript : MonoBehaviour
                 headGO.transform.localScale = Vector3.zero;
                 headGO.transform.position = myPointsScript.splineArray[myPointsScript.splineArray.Length - 1];
                 tube.SetPoints(myPointsScript.splineArray, myPointsScript.radius, Color.white);
-                //headGO.transform.position = rayHit.point;
-                //myPointsScript.AddPoint(headGO.transform.position);
+
+                for (int i = 1; i < myPointsScript.splineArray.Length; i++)
+                {
+                    GameObject bodyGO = Instantiate(catColliderObj, listGO.transform);
+                    bodyGO.transform.position = myPointsScript.splineArray[i];
+                    bodyGO.transform.SetSiblingIndex(i);
+                }
             }
 
             if (myList.Count < 3)
             {
+                planeObj.SetActive(false);
                 canCreateCat = false;
                 StartCoroutine(ResetCat());
             }
@@ -155,7 +159,7 @@ public class LongCatARScript : MonoBehaviour
                     uiManager.SetScreenshotScreen();
                 }
 
-                listGO.GetComponent<CatParentScript>().canMove = true;
+                planeObj.SetActive(false);
                 canCreateCat = false;
             }
         }
@@ -191,7 +195,7 @@ public class LongCatARScript : MonoBehaviour
         }
         while (myPointsScript.deleteArray.Length > 0)
         {
-            Destroy(listObj.GetChild(myPointsScript.deleteArray.Length - 1));
+            //Destroy(listObj.GetChild(myPointsScript.deleteArray.Length - 1));
 
             myPointsScript.DeletePoint(numPointsDeleted);
             tube.SetPoints(myPointsScript.deleteArray, myPointsScript.radiusArray, Color.white);
@@ -219,6 +223,7 @@ public class LongCatARScript : MonoBehaviour
         Destroy(root.gameObject);
         root = new GameObject();
         changeColorScript.ResetColorCycle();
+        planeObj.SetActive(true);
         canCreateCat = true;
         yield return null;
     }

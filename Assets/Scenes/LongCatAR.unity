@@ -3819,10 +3819,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   catHeadObj: {fileID: 9165887197945342074, guid: 2ed91dc52972e4b07822c253a9e55db9,
     type: 3}
-  catBodyObj: {fileID: 8381264758167987460, guid: ff9d5eed9f912441db0e4603d0ae82d4,
+  catColliderObj: {fileID: 8381264758167987460, guid: ff9d5eed9f912441db0e4603d0ae82d4,
     type: 3}
   catTailObj: {fileID: 8463703205242046663, guid: fe9d046c918754deb864920c153b463c,
     type: 3}
+  planeObj: {fileID: 194242137}
   minDistance: 0.08
   listObj: {fileID: 8908073722504222708, guid: 85520e4f390a9442cb92b61b5bda7c0a, type: 3}
   uiManager: {fileID: 153083721}

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class BodyPartsScript : MonoBehaviour
 {
-    public bool catParentObj = false;
+    public bool head;
+    public bool tail;
     Transform parent;
     int childNumber;
     //Vector3 currentPosition;
@@ -14,8 +15,6 @@ public class BodyPartsScript : MonoBehaviour
 
     //List<Vector3> points;
     Vector3[] points;
-
-    public bool rotate = true;
 
     void Awake()
     {
@@ -29,13 +28,13 @@ public class BodyPartsScript : MonoBehaviour
 
     void Rotate()
     {
-        if (parent.childCount > 1 && parent.childCount - 1 > childNumber)
+        if (parent.GetComponent<PointsListScript>().splineArray.Length > 1 && tail)
         {
             //transform.LookAt(parent.GetChild(childNumber + 1));
-            transform.LookAt(parent.GetComponent<PointsListScript>().pointsList[childNumber + 1]);
+            transform.LookAt(parent.GetComponent<PointsListScript>().splineArray[1]);
         }
 
-        if (parent.childCount > 1 && parent.childCount - 1 == childNumber)
+        if (parent.childCount > 1 && head)
         {
             //transform.localEulerAngles = parent.GetChild(childNumber - 1).localEulerAngles;
             points = parent.GetComponent<PointsListScript>().splineArray;

@@ -866,8 +866,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 425c87e8071d440b082a36f105f92e70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  catParentObj: 0
-  rotate: 1
+  head: 0
+  tail: 1
 --- !u!65 &2345956865152593235
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -877,7 +877,7 @@ BoxCollider:
   m_GameObject: {fileID: 8463703205242046663}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.59487504, y: 1.1850863, z: 0.70037585}
   m_Center: {x: 0.0010540187, y: -0.27295637, z: -0.15172273}

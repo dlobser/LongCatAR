@@ -40,7 +40,7 @@ public class ChangeColorScript : MonoBehaviour
                     {
                         if (Physics.Raycast(Camera.main.ScreenPointToRay(touch.position), out catHit, 10f))
                         {
-                            if (catHit.collider != null && catHit.collider.CompareTag("Plane") == false)
+                            if (catHit.collider != null)
                             {
                                 GameObject parent = catHit.collider.transform.parent.gameObject;
                                 animator = parent.transform.GetChild(parent.transform.childCount - 1).GetComponent<Animator>();
