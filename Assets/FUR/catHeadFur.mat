@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: catHeadFur
-  m_Shader: {fileID: 4800000, guid: a1fdb8b31d719493ea1c91a5bc4f05d6, type: 3}
+  m_Shader: {fileID: 4800000, guid: 45f4126d02d8943c3bff1b5e179a28f0, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0

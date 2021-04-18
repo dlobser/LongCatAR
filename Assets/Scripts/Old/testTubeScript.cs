@@ -10,6 +10,7 @@ public class testTubeScript : MonoBehaviour
     List<Vector3> myList;
     TubeRenderer tube;
     public GameObject sphere;
+    public GameObject catHead;
     // Start is called before the first frame update
     void Start()
     {
@@ -43,7 +44,7 @@ public class testTubeScript : MonoBehaviour
         }
         if (Input.GetMouseButton(0))
         {
-            if (Vector3.Distance(myList[myList.Count - 1], Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10))) > 1f)
+            if (Vector3.Distance(myList[myList.Count - 1], Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10))) > .08f)
             {
                 myList.Add(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10)));
                 GameObject mysphere = Instantiate(sphere);
@@ -69,5 +70,12 @@ public class testTubeScript : MonoBehaviour
                 tube.SetPoints(splineArray, 0.06f, Color.white);
             }
         }
+        
+        if (Input.GetMouseButtonUp(0))
+        {
+            GameObject catHeadObj = Instantiate(catHead);
+            catHeadObj.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10));
+        }
+        
     }
 }

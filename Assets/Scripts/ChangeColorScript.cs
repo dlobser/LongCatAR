@@ -17,6 +17,7 @@ public class ChangeColorScript : MonoBehaviour
     float MAX_PITCH = 1.25f;
     Color newColor;
     Animator animator;
+    public UIScript uiManager;
 
     // Start is called before the first frame update
     void Start()
@@ -25,20 +26,29 @@ public class ChangeColorScript : MonoBehaviour
         source = GetComponent<AudioSource>();
     }
 
+    bool IsPointerOverUIObject()
+    {
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+        return results.Count > 0;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        if (Input.touchCount == 1)
-        {   
-            if (Input.GetTouch(0).tapCount == 1)
-            {
+        if (uiManager.currentState == UIScript.GameState.ScreenshotScreen)
+        {
+            if (Input.GetTouch(0).phase == TouchPhase.Began)
+            {   
                 Touch touch = Input.GetTouch(0);
 
-                if (!EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+                if (touch.tapCount == 1)
                 {
-                    if (touch.phase == TouchPhase.Ended)
+                    if (Physics.Raycast(Camera.main.ScreenPointToRay(touch.position), out catHit, 10f))
                     {
-                        if (Physics.Raycast(Camera.main.ScreenPointToRay(touch.position), out catHit, 10f))
+                        if (!IsPointerOverUIObject())
                         {
                             if (catHit.collider != null)
                             {
@@ -84,7 +94,7 @@ public class ChangeColorScript : MonoBehaviour
                 break;
 
             case 3:
-                newColor = new Color32(19, 19, 19, 1);
+                newColor = new Color32(0, 0, 0, 1);
                 break;
 
             case 4:
