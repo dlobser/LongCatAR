@@ -16,6 +16,8 @@ public class UIScript : MonoBehaviour
     public GameObject ScreenshotUI;
     public GameObject SsInstructionsUI;
     public GameObject ShareUI;
+    public GameObject CatLengthUI;
+    public Text catLengthText;
     public RawImage screenshotPreview;
     public GameState currentState;
     public enum GameState
@@ -33,6 +35,7 @@ public class UIScript : MonoBehaviour
     private ARRaycastManager rayManager;
     private float currentTime;
     private bool canScreenshot;
+    public LongCatARScript longCatARScript;
 
     private void Start()
     {
@@ -68,6 +71,11 @@ public class UIScript : MonoBehaviour
                 SetState(GameState.InstructionsScreen);
             }
         }
+
+        if (currentState == GameState.GameScreen)
+        {
+            catLengthText.text = System.Math.Round(longCatARScript.catLength, 2).ToString() + " m";
+        }
     }
 
     private void SetState(GameState newState)
@@ -84,6 +92,7 @@ public class UIScript : MonoBehaviour
             ScreenshotUI.SetActive(false);
             SsInstructionsUI.SetActive(false);
             ShareUI.SetActive(false);
+            CatLengthUI.SetActive(false);
         }
 
         if (newState == GameState.LookAroundScreen)
@@ -96,6 +105,7 @@ public class UIScript : MonoBehaviour
             ScreenshotUI.SetActive(false);
             SsInstructionsUI.SetActive(false);
             ShareUI.SetActive(false);
+            CatLengthUI.SetActive(false);
         }
 
         if (newState == GameState.DoneLookingScreen)
@@ -108,6 +118,7 @@ public class UIScript : MonoBehaviour
             ScreenshotUI.SetActive(false);
             SsInstructionsUI.SetActive(false);
             ShareUI.SetActive(false);
+            CatLengthUI.SetActive(false);
         }
 
         if (newState == GameState.GameScreen)
@@ -120,6 +131,7 @@ public class UIScript : MonoBehaviour
             ScreenshotUI.SetActive(false);
             SsInstructionsUI.SetActive(false);
             ShareUI.SetActive(false);
+            CatLengthUI.SetActive(true);
         }
 
         if (newState == GameState.InstructionsScreen)
@@ -132,6 +144,7 @@ public class UIScript : MonoBehaviour
             ScreenshotUI.SetActive(false);
             SsInstructionsUI.SetActive(false);
             ShareUI.SetActive(false);
+            CatLengthUI.SetActive(false);
         }
 
         if (newState == GameState.ScreenshotScreen)
@@ -144,6 +157,7 @@ public class UIScript : MonoBehaviour
             ScreenshotUI.SetActive(true);
             SsInstructionsUI.SetActive(false);
             ShareUI.SetActive(false);
+            CatLengthUI.SetActive(true);
         }
 
         if (newState == GameState.SsInstructionsScreen)
@@ -156,6 +170,7 @@ public class UIScript : MonoBehaviour
             ScreenshotUI.SetActive(false);
             SsInstructionsUI.SetActive(true);
             ShareUI.SetActive(false);
+            CatLengthUI.SetActive(false);
         }
 
         if (newState == GameState.ShareScreen)
@@ -168,6 +183,7 @@ public class UIScript : MonoBehaviour
             ScreenshotUI.SetActive(false);
             SsInstructionsUI.SetActive(false);
             ShareUI.SetActive(true);
+            CatLengthUI.SetActive(false);
         }
     }
 

@@ -11,9 +11,10 @@ public class LongCatARScript : MonoBehaviour
     public GameObject catColliderObj;
     public GameObject catTailObj;
     public GameObject planeObj;
-    public float minDistance = 0.3f;
+    public float minDistance;
     public GameObject listObj;
     public UIScript uiManager;
+    public float catLength;
 
     private bool canCreateCat = true;
     private bool openSsInstructions = true;
@@ -36,6 +37,7 @@ public class LongCatARScript : MonoBehaviour
         rayManager = FindObjectOfType<ARRaycastManager>();
         changeColorScript = gameObject.GetComponent<ChangeColorScript>();
         planeObj.SetActive(true);
+        catLength = 0.0f;
     }
 
     private void Update()
@@ -105,6 +107,7 @@ public class LongCatARScript : MonoBehaviour
                 {
                     tube.vertices[i] = new TubeRenderer.TubeVertex(Vector3.zero, 1, Color.white);
                 }
+                catLength += minDistance;
             }
         }
 
@@ -118,6 +121,7 @@ public class LongCatARScript : MonoBehaviour
                 {
                     myPointsScript.AddPoint(rayHit.point);
                     tube.SetPoints(myPointsScript.splineArray, myPointsScript.radiusArray, Color.white);
+                    catLength += minDistance;
                 }
             }
         }
@@ -138,6 +142,7 @@ public class LongCatARScript : MonoBehaviour
                     bodyGO.transform.position = myPointsScript.splineArray[i];
                     bodyGO.transform.SetSiblingIndex(i);
                 }
+                catLength += minDistance;
             }
 
             if (myList.Count < 3)
@@ -220,6 +225,7 @@ public class LongCatARScript : MonoBehaviour
 
     IEnumerator ResetCat()
     {
+        catLength = 0.0f;
         Destroy(root.gameObject);
         root = new GameObject();
         changeColorScript.ResetColorCycle();
